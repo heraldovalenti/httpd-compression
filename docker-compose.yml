@@ -1,0 +1,14 @@
+version: '3'
+services:
+  web:
+    image: httpd:2.4
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "./httpd.conf:/usr/local/apache2/conf/httpd.conf"
+      - "./deflate.conf:/usr/local/apache2/conf/deflate.conf"
+      - "./https.conf:/usr/local/apache2/conf/https.conf"
+      - "./domain.key:/usr/local/apache2/conf/domain.key"
+      - "./domain.crt:/usr/local/apache2/conf/domain.crt"
+      - "./html:/usr/local/apache2/htdocs"

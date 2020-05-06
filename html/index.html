@@ -1,0 +1,442 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0053)http://httpd.apache.org/docs/2.4/mod/mod_deflate.html -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+<!--
+        XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+              This file is generated from xml source: DO NOT EDIT
+        XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+      -->
+<title>mod_deflate - Apache HTTP Server Version 2.4</title>
+<link href="./mod_deflate - Apache HTTP Server Version 2.4_files/manual.css" rel="stylesheet" media="all" type="text/css" title="Main stylesheet">
+<link href="./mod_deflate - Apache HTTP Server Version 2.4_files/manual-loose-100pc.css" rel="alternate stylesheet" media="all" type="text/css" title="No Sidebar - Default font size">
+<link href="./mod_deflate - Apache HTTP Server Version 2.4_files/manual-print.css" rel="stylesheet" media="print" type="text/css"><link rel="stylesheet" type="text/css" href="./mod_deflate - Apache HTTP Server Version 2.4_files/prettify.css">
+<script src="./mod_deflate - Apache HTTP Server Version 2.4_files/prettify.min.js" type="text/javascript">
+</script>
+
+<link href="http://httpd.apache.org/docs/2.4/images/favicon.ico" rel="shortcut icon"><script type="text/javascript" async="" src="https://comments.apache.org/show_comments.lua?site=httpd&amp;page=http://httpd.apache.org/docs/2.4/mod/mod_deflate.html"></script></head>
+<body>
+<div id="page-header">
+<p class="menu"><a href="http://httpd.apache.org/docs/2.4/mod/">Modules</a> | <a href="http://httpd.apache.org/docs/2.4/mod/directives.html">Directives</a> | <a href="http://wiki.apache.org/httpd/FAQ">FAQ</a> | <a href="http://httpd.apache.org/docs/2.4/glossary.html">Glossary</a> | <a href="http://httpd.apache.org/docs/2.4/sitemap.html">Sitemap</a></p>
+<p class="apache">Apache HTTP Server Version 2.4</p>
+<img alt="" src="./mod_deflate - Apache HTTP Server Version 2.4_files/feather.png"></div>
+<div class="up"><a href="http://httpd.apache.org/docs/2.4/mod/"><img title="&lt;-" alt="&lt;-" src="./mod_deflate - Apache HTTP Server Version 2.4_files/left.gif"></a></div>
+<div id="path">
+<a href="http://www.apache.org/">Apache</a> &gt; <a href="http://httpd.apache.org/">HTTP Server</a> &gt; <a href="http://httpd.apache.org/docs/">Documentation</a> &gt; <a href="http://httpd.apache.org/docs/2.4/">Version 2.4</a> &gt; <a href="http://httpd.apache.org/docs/2.4/mod/">Modules</a></div>
+<div id="page-content">
+<div id="preamble"><h1>Apache Module mod_deflate</h1>
+<div class="toplang">
+<p><span>Available Languages: </span><a href="http://httpd.apache.org/docs/2.4/en/mod/mod_deflate.html" title="English">&nbsp;en&nbsp;</a> |
+<a href="http://httpd.apache.org/docs/2.4/fr/mod/mod_deflate.html" hreflang="fr" rel="alternate" title="Français">&nbsp;fr&nbsp;</a> |
+<a href="http://httpd.apache.org/docs/2.4/ja/mod/mod_deflate.html" hreflang="ja" rel="alternate" title="Japanese">&nbsp;ja&nbsp;</a> |
+<a href="http://httpd.apache.org/docs/2.4/ko/mod/mod_deflate.html" hreflang="ko" rel="alternate" title="Korean">&nbsp;ko&nbsp;</a></p>
+</div>
+<table class="module"><tbody><tr><th><a href="http://httpd.apache.org/docs/2.4/mod/module-dict.html#Description">Description:</a></th><td>Compress content before it is delivered to the
+client</td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/module-dict.html#Status">Status:</a></th><td>Extension</td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/module-dict.html#ModuleIdentifier">Module&nbsp;Identifier:</a></th><td>deflate_module</td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/module-dict.html#SourceFile">Source&nbsp;File:</a></th><td>mod_deflate.c</td></tr></tbody></table>
+<h3>Summary</h3>
+
+    <p>The <code class="module"><a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html">mod_deflate</a></code> module provides
+    the <code>DEFLATE</code> output filter that allows output from
+    your server to be compressed before being sent to the client over
+    the network.</p>
+</div>
+<div id="quickview"><a href="https://www.apache.org/foundation/contributing.html" class="badge"><img src="./mod_deflate - Apache HTTP Server Version 2.4_files/SupportApache-small.png" alt="Support Apache!"></a><h3>Topics</h3>
+<ul id="topics">
+<li><img alt="" src="./mod_deflate - Apache HTTP Server Version 2.4_files/down.gif"> <a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html#supportedencodings">Supported Encodings</a></li>
+<li><img alt="" src="./mod_deflate - Apache HTTP Server Version 2.4_files/down.gif"> <a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html#recommended">Sample Configurations</a></li>
+<li><img alt="" src="./mod_deflate - Apache HTTP Server Version 2.4_files/down.gif"> <a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html#enable">Enabling Compression</a></li>
+<li><img alt="" src="./mod_deflate - Apache HTTP Server Version 2.4_files/down.gif"> <a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html#proxies">Dealing with proxy servers</a></li>
+<li><img alt="" src="./mod_deflate - Apache HTTP Server Version 2.4_files/down.gif"> <a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html#precompressed">Serving pre-compressed
+content</a></li>
+</ul><h3 class="directives">Directives</h3>
+<ul id="toc">
+<li><img alt="" src="./mod_deflate - Apache HTTP Server Version 2.4_files/down.gif"> <a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html#deflatebuffersize">DeflateBufferSize</a></li>
+<li><img alt="" src="./mod_deflate - Apache HTTP Server Version 2.4_files/down.gif"> <a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html#deflatecompressionlevel">DeflateCompressionLevel</a></li>
+<li><img alt="" src="./mod_deflate - Apache HTTP Server Version 2.4_files/down.gif"> <a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html#deflatefilternote">DeflateFilterNote</a></li>
+<li><img alt="" src="./mod_deflate - Apache HTTP Server Version 2.4_files/down.gif"> <a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html#deflateinflatelimitrequestbody">DeflateInflateLimitRequestBody</a></li>
+<li><img alt="" src="./mod_deflate - Apache HTTP Server Version 2.4_files/down.gif"> <a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html#deflateinflateratioburst">DeflateInflateRatioBurst</a></li>
+<li><img alt="" src="./mod_deflate - Apache HTTP Server Version 2.4_files/down.gif"> <a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html#deflateinflateratiolimit">DeflateInflateRatioLimit</a></li>
+<li><img alt="" src="./mod_deflate - Apache HTTP Server Version 2.4_files/down.gif"> <a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html#deflatememlevel">DeflateMemLevel</a></li>
+<li><img alt="" src="./mod_deflate - Apache HTTP Server Version 2.4_files/down.gif"> <a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html#deflatewindowsize">DeflateWindowSize</a></li>
+</ul>
+<h3>Bugfix checklist</h3><ul class="seealso"><li><a href="https://www.apache.org/dist/httpd/CHANGES_2.4">httpd changelog</a></li><li><a href="https://bz.apache.org/bugzilla/buglist.cgi?bug_status=__open__&amp;list_id=144532&amp;product=Apache%20httpd-2&amp;query_format=specific&amp;order=changeddate%20DESC%2Cpriority%2Cbug_severity&amp;component=mod_deflate">Known issues</a></li><li><a href="https://bz.apache.org/bugzilla/enter_bug.cgi?product=Apache%20httpd-2&amp;component=mod_deflate">Report a bug</a></li></ul><h3>See also</h3>
+<ul class="seealso">
+<li><a href="http://httpd.apache.org/docs/2.4/filter.html">Filters</a></li>
+<li><a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html#comments_section">Comments</a></li></ul></div>
+<div class="top"><a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html#page-header"><img alt="top" src="./mod_deflate - Apache HTTP Server Version 2.4_files/up.gif"></a></div>
+<div class="section">
+<h2><a name="supportedencodings" id="supportedencodings">Supported Encodings</a></h2>
+  <p>The <code>gzip</code> encoding is the only one supported to ensure complete compatibility
+  with old browser implementations. The <code>deflate</code> encoding is not supported, 
+  please check the <a href="https://zlib.net/zlib_faq.html#faq39">zlib's documentation</a>
+  for a complete explanation.
+  </p>
+</div><div class="top"><a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html#page-header"><img alt="top" src="./mod_deflate - Apache HTTP Server Version 2.4_files/up.gif"></a></div>
+<div class="section">
+<h2><a name="recommended" id="recommended">Sample Configurations</a></h2>
+    <div class="warning"><h3>Compression and TLS</h3>
+        <p>Some web applications are vulnerable to an information disclosure
+        attack when a TLS connection carries deflate compressed data. For more
+        information, review the details of the "BREACH" family of attacks.</p>
+    </div>
+    <p>This is a simple configuration that compresses common text-based content types.</p>
+
+    <div class="example"><h3>Compress only a few types</h3><pre class="prettyprint lang-config prettyprinted" style=""><span class="kwd">AddOutputFilterByType</span><span class="pln"> DEFLATE text</span><span class="pun">/</span><span class="pln">html text</span><span class="pun">/</span><span class="pln">plain text</span><span class="pun">/</span><span class="pln">xml text</span><span class="pun">/</span><span class="pln">css text</span><span class="pun">/</span><span class="pln">javascript application</span><span class="pun">/</span><span class="pln">javascript</span></pre>
+</div>
+
+</div><div class="top"><a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html#page-header"><img alt="top" src="./mod_deflate - Apache HTTP Server Version 2.4_files/up.gif"></a></div>
+<div class="section">
+<h2><a name="enable" id="enable">Enabling Compression</a></h2>
+    <div class="warning"><h3>Compression and TLS</h3>
+        <p>Some web applications are vulnerable to an information disclosure
+        attack when a TLS connection carries deflate compressed data. For more
+        information, review the details of the "BREACH" family of attacks.</p>
+    </div>
+
+    <h3><a name="output" id="output">Output Compression</a></h3>
+      <p>Compression is implemented by the <code>DEFLATE</code>
+      <a href="http://httpd.apache.org/docs/2.4/filter.html">filter</a>. The following directive
+      will enable compression for documents in the container where it
+      is placed:</p>
+
+      <pre class="prettyprint lang-config prettyprinted" style=""><span class="kwd">SetOutputFilter</span><span class="pln"> DEFLATE
+</span><span class="kwd">SetEnvIfNoCase</span><span class="pln"> </span><span class="typ">Request_URI</span><span class="pln"> </span><span class="str">"\.(?:gif|jpe?g|png)$"</span><span class="pln"> no-gzip</span></pre>
+
+
+      <p>If you want to restrict the compression to particular MIME types
+      in general, you may use the <code class="directive"><a href="http://httpd.apache.org/docs/2.4/mod/mod_filter.html#addoutputfilterbytype">AddOutputFilterByType</a></code> directive. Here is an example of
+      enabling compression only for the html files of the Apache
+      documentation:</p>
+
+      <pre class="prettyprint lang-config prettyprinted" style=""><span class="pun">&lt;</span><span class="tag">Directory</span><span class="pln"> </span><span class="str">"/your-server-root/manual"</span><span class="pun">&gt;</span><span class="pln">
+    </span><span class="kwd">AddOutputFilterByType</span><span class="pln"> DEFLATE text</span><span class="pun">/</span><span class="pln">html
+</span><span class="pun">&lt;/</span><span class="tag">Directory</span><span class="pun">&gt;</span></pre>
+
+
+      <div class="note"><h3>Note</h3>
+        The <code>DEFLATE</code> filter is always inserted after RESOURCE
+        filters like PHP or SSI. It never touches internal subrequests.
+      </div>
+      <div class="note"><h3>Note</h3>
+        There is an environment variable <code>force-gzip</code>,
+        set via <code class="directive"><a href="http://httpd.apache.org/docs/2.4/mod/mod_env.html#setenv">SetEnv</a></code>, which
+        will ignore the accept-encoding setting of your browser and will
+        send compressed output.
+      </div>
+
+    
+    <h3><a name="inflate" id="inflate">Output Decompression</a></h3>
+      <p>The <code class="module"><a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html">mod_deflate</a></code> module also provides a filter for
+      inflating/uncompressing a gzip compressed response body. In order to activate
+      this feature you have to insert the <code>INFLATE</code> filter into
+      the output filter chain using <code class="directive"><a href="http://httpd.apache.org/docs/2.4/mod/core.html#setoutputfilter">SetOutputFilter</a></code> or <code class="directive"><a href="http://httpd.apache.org/docs/2.4/mod/mod_mime.html#addoutputfilter">AddOutputFilter</a></code>, for example:</p>
+
+      <pre class="prettyprint lang-config prettyprinted" style=""><span class="pun">&lt;</span><span class="tag">Location</span><span class="pln"> </span><span class="str">"/dav-area"</span><span class="pun">&gt;</span><span class="pln">
+    </span><span class="kwd">ProxyPass</span><span class="pln"> </span><span class="str">"http://example.com/"</span><span class="pln">
+    </span><span class="kwd">SetOutputFilter</span><span class="pln"> INFLATE
+</span><span class="pun">&lt;/</span><span class="tag">Location</span><span class="pun">&gt;</span></pre>
+
+
+      <p>This Example will uncompress gzip'ed output from example.com, so other
+      filters can do further processing with it.
+      </p>
+
+    
+    <h3><a name="input" id="input">Input Decompression</a></h3>
+      <p>The <code class="module"><a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html">mod_deflate</a></code> module also provides a filter for
+      decompressing a gzip compressed request body . In order to activate
+      this feature you have to insert the <code>DEFLATE</code> filter into
+      the input filter chain using <code class="directive"><a href="http://httpd.apache.org/docs/2.4/mod/core.html#setinputfilter">SetInputFilter</a></code> or <code class="directive"><a href="http://httpd.apache.org/docs/2.4/mod/mod_mime.html#addinputfilter">AddInputFilter</a></code>, for example:</p>
+
+      <pre class="prettyprint lang-config prettyprinted" style=""><span class="pun">&lt;</span><span class="tag">Location</span><span class="pln"> </span><span class="str">"/dav-area"</span><span class="pun">&gt;</span><span class="pln">
+    </span><span class="kwd">SetInputFilter</span><span class="pln"> DEFLATE
+</span><span class="pun">&lt;/</span><span class="tag">Location</span><span class="pun">&gt;</span></pre>
+
+
+      <p>Now if a request contains a <code>Content-Encoding:
+      gzip</code> header, the body will be automatically decompressed.
+      Few browsers have the ability to gzip request bodies. However,
+      some special applications actually do support request
+      compression, for instance some <a href="http://www.webdav.org/">WebDAV</a> clients.</p>
+
+      <div class="warning"><h3>Note on Content-Length</h3>
+        <p>If you evaluate the request body yourself, <em>don't trust
+        the <code>Content-Length</code> header!</em>
+        The Content-Length header reflects the length of the
+        incoming data from the client and <em>not</em> the byte count of
+        the decompressed data stream.</p>
+      </div>
+    
+</div><div class="top"><a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html#page-header"><img alt="top" src="./mod_deflate - Apache HTTP Server Version 2.4_files/up.gif"></a></div>
+<div class="section">
+<h2><a name="proxies" id="proxies">Dealing with proxy servers</a></h2>
+
+    <p>The <code class="module"><a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html">mod_deflate</a></code> module sends a <code>Vary:
+    Accept-Encoding</code> HTTP response header to alert proxies that
+    a cached response should be sent only to clients that send the
+    appropriate <code>Accept-Encoding</code> request header.  This
+    prevents compressed content from being sent to a client that will
+    not understand it.</p>
+
+    <p>If you use some special exclusions dependent
+    on, for example, the <code>User-Agent</code> header, you must
+    manually configure an addition to the <code>Vary</code> header
+    to alert proxies of the additional restrictions.  For example,
+    in a typical configuration where the addition of the <code>DEFLATE</code>
+    filter depends on the <code>User-Agent</code>, you should add:</p>
+
+    <pre class="prettyprint lang-config prettyprinted" style=""><span class="kwd">Header</span><span class="pln"> append </span><span class="typ">Vary</span><span class="pln"> </span><span class="str">User-Agent</span></pre>
+
+
+    <p>If your decision about compression depends on other information
+    than request headers (<em>e.g.</em> HTTP version), you have to set the
+    <code>Vary</code> header to the value <code>*</code>. This prevents
+    compliant proxies from caching entirely.</p>
+
+    <div class="example"><h3>Example</h3><pre class="prettyprint lang-config prettyprinted" style=""><span class="kwd">Header</span><span class="pln"> set </span><span class="typ">Vary</span><span class="pln"> </span><span class="pun">*</span></pre>
+</div>
+</div><div class="top"><a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html#page-header"><img alt="top" src="./mod_deflate - Apache HTTP Server Version 2.4_files/up.gif"></a></div>
+<div class="section">
+<h2><a name="precompressed" id="precompressed">Serving pre-compressed
+content</a></h2>
+
+    <p>Since <code class="module"><a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html">mod_deflate</a></code> re-compresses content each
+    time a request is made, some performance benefit can be derived by
+    pre-compressing the content and telling <code class="module"><a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html">mod_deflate</a></code> to serve them
+    without re-compressing them. This may be accomplished using a
+    configuration like the following:</p>
+
+    <pre class="prettyprint lang-config prettyprinted" style=""><span class="pun">&lt;</span><span class="tag">IfModule</span><span class="pln"> mod_headers</span><span class="pun">.</span><span class="pln">c</span><span class="pun">&gt;</span><span class="pln">
+    </span><span class="com"># Serve gzip compressed CSS and JS files if they exist</span><span class="pln">
+    </span><span class="com"># and the client accepts gzip.</span><span class="pln">
+    </span><span class="kwd">RewriteCond</span><span class="pln"> </span><span class="str">"%{HTTP:Accept-encoding}"</span><span class="pln"> </span><span class="str">"gzip"</span><span class="pln">
+    </span><span class="kwd">RewriteCond</span><span class="pln"> </span><span class="str">"%{REQUEST_FILENAME}\.gz"</span><span class="pln"> </span><span class="pun">-</span><span class="pln">s
+    </span><span class="kwd">RewriteRule</span><span class="pln"> </span><span class="str">"^(.*)\.(css|js)"</span><span class="pln">         </span><span class="str">"$1\.$2\.gz"</span><span class="pln"> </span><span class="pun">[</span><span class="pln">QSA</span><span class="pun">]</span><span class="pln">
+
+    </span><span class="com"># Serve correct content types, and prevent mod_deflate double gzip.</span><span class="pln">
+    </span><span class="kwd">RewriteRule</span><span class="pln"> </span><span class="str">"\.css\.gz$"</span><span class="pln"> </span><span class="str">"-"</span><span class="pln"> </span><span class="pun">[</span><span class="pln">T</span><span class="pun">=</span><span class="pln">text</span><span class="pun">/</span><span class="pln">css</span><span class="pun">,</span><span class="pln">E</span><span class="pun">=</span><span class="pln">no-gzip</span><span class="pun">:</span><span class="lit">1</span><span class="pun">]</span><span class="pln">
+    </span><span class="kwd">RewriteRule</span><span class="pln"> </span><span class="str">"\.js\.gz$"</span><span class="pln">  </span><span class="str">"-"</span><span class="pln"> </span><span class="pun">[</span><span class="pln">T</span><span class="pun">=</span><span class="pln">text</span><span class="pun">/</span><span class="pln">javascript</span><span class="pun">,</span><span class="pln">E</span><span class="pun">=</span><span class="pln">no-gzip</span><span class="pun">:</span><span class="lit">1</span><span class="pun">]</span><span class="pln">
+
+
+    </span><span class="pun">&lt;</span><span class="tag">FilesMatch</span><span class="pln"> </span><span class="str">"(\.js\.gz|\.css\.gz)$"</span><span class="pun">&gt;</span><span class="pln">
+      </span><span class="com"># Serve correct encoding type.</span><span class="pln">
+      </span><span class="kwd">Header</span><span class="pln"> append </span><span class="typ">Content</span><span class="pun">-</span><span class="typ">Encoding</span><span class="pln"> gzip
+
+      </span><span class="com"># Force proxies to cache gzipped &amp;</span><span class="pln">
+      </span><span class="com"># non-gzipped css/js files separately.</span><span class="pln">
+      </span><span class="kwd">Header</span><span class="pln"> append </span><span class="typ">Vary</span><span class="pln"> </span><span class="typ">Accept</span><span class="pun">-</span><span class="typ">Encoding</span><span class="pln">
+    </span><span class="pun">&lt;/</span><span class="tag">FilesMatch</span><span class="pun">&gt;</span><span class="pln">
+</span><span class="pun">&lt;/</span><span class="tag">IfModule</span><span class="pun">&gt;</span></pre>
+
+
+</div>
+<div class="top"><a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html#page-header"><img alt="top" src="./mod_deflate - Apache HTTP Server Version 2.4_files/up.gif"></a></div>
+<div class="directive-section"><h2><a name="DeflateBufferSize" id="DeflateBufferSize">DeflateBufferSize</a> <a name="deflatebuffersize" id="deflatebuffersize">Directive</a></h2>
+<table class="directive">
+<tbody><tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Description">Description:</a></th><td>Fragment size to be compressed at one time by zlib</td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Syntax">Syntax:</a></th><td><code>DeflateBufferSize <var>value</var></code></td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Default">Default:</a></th><td><code>DeflateBufferSize 8096</code></td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Context">Context:</a></th><td>server config, virtual host</td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Status">Status:</a></th><td>Extension</td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Module">Module:</a></th><td>mod_deflate</td></tr>
+</tbody></table>
+    <p>The <code class="directive">DeflateBufferSize</code> directive specifies
+    the size in bytes of the fragments that zlib should compress at one
+    time. If the compressed response size is bigger than the one specified
+    by this directive then httpd will switch to chunked encoding 
+    (HTTP header <code>Transfer-Encoding</code> set to <code>Chunked</code>), with the
+    side effect of not setting any <code>Content-Length</code> HTTP header. This is particularly 
+    important when httpd works behind reverse caching proxies or when httpd is configured with 
+    <code class="module"><a href="http://httpd.apache.org/docs/2.4/mod/mod_cache.html">mod_cache</a></code> and <code class="module"><a href="http://httpd.apache.org/docs/2.4/mod/mod_cache_disk.html">mod_cache_disk</a></code> because
+    HTTP responses without any <code>Content-Length</code> header might not be cached.
+  </p>
+
+</div>
+<div class="top"><a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html#page-header"><img alt="top" src="./mod_deflate - Apache HTTP Server Version 2.4_files/up.gif"></a></div>
+<div class="directive-section"><h2><a name="DeflateCompressionLevel" id="DeflateCompressionLevel">DeflateCompressionLevel</a> <a name="deflatecompressionlevel" id="deflatecompressionlevel">Directive</a></h2>
+<table class="directive">
+<tbody><tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Description">Description:</a></th><td>How much compression do we apply to the output</td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Syntax">Syntax:</a></th><td><code>DeflateCompressionLevel <var>value</var></code></td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Default">Default:</a></th><td><code>Zlib's default</code></td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Context">Context:</a></th><td>server config, virtual host</td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Status">Status:</a></th><td>Extension</td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Module">Module:</a></th><td>mod_deflate</td></tr>
+</tbody></table>
+    <p>The <code class="directive">DeflateCompressionLevel</code> directive specifies
+        what level of compression should be used, the higher the value,
+        the better the compression, but the more CPU time is required to
+        achieve this.</p>
+    <p>The value must between 1 (less compression) and 9 (more compression).</p>
+
+</div>
+<div class="top"><a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html#page-header"><img alt="top" src="./mod_deflate - Apache HTTP Server Version 2.4_files/up.gif"></a></div>
+<div class="directive-section"><h2><a name="DeflateFilterNote" id="DeflateFilterNote">DeflateFilterNote</a> <a name="deflatefilternote" id="deflatefilternote">Directive</a></h2>
+<table class="directive">
+<tbody><tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Description">Description:</a></th><td>Places the compression ratio in a note for logging</td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Syntax">Syntax:</a></th><td><code>DeflateFilterNote [<var>type</var>] <var>notename</var></code></td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Context">Context:</a></th><td>server config, virtual host</td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Status">Status:</a></th><td>Extension</td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Module">Module:</a></th><td>mod_deflate</td></tr>
+</tbody></table>
+    <p>The <code class="directive">DeflateFilterNote</code> directive
+    specifies that a note about compression ratios should be attached
+    to the request. The name of the note is the value specified for
+    the directive. You can use that note for statistical purposes by
+    adding the value to your <a href="http://httpd.apache.org/docs/2.4/logs.html#accesslog">access log</a>.</p>
+
+    <div class="example"><h3>Example</h3><pre class="prettyprint lang-config prettyprinted" style=""><span class="kwd">DeflateFilterNote</span><span class="pln"> ratio
+
+</span><span class="kwd">LogFormat</span><span class="pln"> </span><span class="str">'"%r" %b (%{ratio}n) "%{User-agent}i"'</span><span class="pln"> deflate
+</span><span class="kwd">CustomLog</span><span class="pln"> </span><span class="str">"logs/deflate_log"</span><span class="pln"> deflate</span></pre>
+</div>
+
+    <p>If you want to extract more accurate values from your logs, you
+    can use the <var>type</var> argument to specify the type of data
+    left as a note for logging. <var>type</var> can be one of:</p>
+
+    <dl>
+      <dt><code>Input</code></dt>
+      <dd>Store the byte count of the filter's input stream in the note.</dd>
+
+      <dt><code>Output</code></dt>
+      <dd>Store the byte count of the filter's output stream in the note.</dd>
+
+      <dt><code>Ratio</code></dt>
+      <dd>Store the compression ratio (<code>output/input * 100</code>)
+      in the note. This is the default, if the <var>type</var> argument
+      is omitted.</dd>
+    </dl>
+
+    <p>Thus you may log it this way:</p>
+
+    <div class="example"><h3>Accurate Logging</h3><pre class="prettyprint lang-config prettyprinted" style=""><span class="kwd">DeflateFilterNote</span><span class="pln"> </span><span class="typ">Input</span><span class="pln"> instream
+</span><span class="kwd">DeflateFilterNote</span><span class="pln"> </span><span class="typ">Output</span><span class="pln"> outstream
+</span><span class="kwd">DeflateFilterNote</span><span class="pln"> </span><span class="typ">Ratio</span><span class="pln"> ratio
+
+</span><span class="kwd">LogFormat</span><span class="pln"> </span><span class="str">'"%r" %{outstream}n/%{instream}n (%{ratio}n%%)'</span><span class="pln"> deflate
+</span><span class="kwd">CustomLog</span><span class="pln"> </span><span class="str">"logs/deflate_log"</span><span class="pln"> deflate</span></pre>
+</div>
+
+<h3>See also</h3>
+<ul>
+<li><code class="module"><a href="http://httpd.apache.org/docs/2.4/mod/mod_log_config.html">mod_log_config</a></code></li>
+</ul>
+</div>
+<div class="top"><a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html#page-header"><img alt="top" src="./mod_deflate - Apache HTTP Server Version 2.4_files/up.gif"></a></div>
+<div class="directive-section"><h2><a name="DeflateInflateLimitRequestBody" id="DeflateInflateLimitRequestBody">DeflateInflateLimitRequestBody</a> <a name="deflateinflatelimitrequestbody" id="deflateinflatelimitrequestbody">Directive</a></h2>
+<table class="directive">
+<tbody><tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Description">Description:</a></th><td>Maximum size of inflated request bodies</td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Syntax">Syntax:</a></th><td><code>DeflateInflateLimitRequestBody <var>value</var></code></td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Default">Default:</a></th><td><code>None, but LimitRequestBody applies after deflation</code></td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Context">Context:</a></th><td>server config, virtual host, directory, .htaccess</td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Status">Status:</a></th><td>Extension</td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Module">Module:</a></th><td>mod_deflate</td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Compatibility">Compatibility:</a></th><td>2.4.10 and later</td></tr>
+</tbody></table>
+    <p>The <code class="directive">DeflateInflateLimitRequestBody</code> directive
+        specifies the maximum size of an inflated request body. If it is unset,
+        <code class="directive"><a href="http://httpd.apache.org/docs/2.4/mod/core.html#limitrequestbody">LimitRequestBody</a></code> is applied to the
+        inflated body.</p>
+
+</div>
+<div class="top"><a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html#page-header"><img alt="top" src="./mod_deflate - Apache HTTP Server Version 2.4_files/up.gif"></a></div>
+<div class="directive-section"><h2><a name="DeflateInflateRatioBurst" id="DeflateInflateRatioBurst">DeflateInflateRatioBurst</a> <a name="deflateinflateratioburst" id="deflateinflateratioburst">Directive</a></h2>
+<table class="directive">
+<tbody><tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Description">Description:</a></th><td>Maximum number of times the inflation ratio for request bodies
+             can be crossed</td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Syntax">Syntax:</a></th><td><code>DeflateInflateRatioBurst <var>value</var></code></td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Default">Default:</a></th><td><code>DeflateInflateRatioBurst 3</code></td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Context">Context:</a></th><td>server config, virtual host, directory, .htaccess</td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Status">Status:</a></th><td>Extension</td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Module">Module:</a></th><td>mod_deflate</td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Compatibility">Compatibility:</a></th><td>2.4.10 and later</td></tr>
+</tbody></table>
+    <p>The <code class="directive">DeflateInflateRatioBurst</code> directive
+       specifies the maximum number of times the
+       <code class="directive"><a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html#deflateinflateratiolimit">DeflateInflateRatioLimit</a></code> can
+       be crossed before terminating the request.</p>
+
+</div>
+<div class="top"><a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html#page-header"><img alt="top" src="./mod_deflate - Apache HTTP Server Version 2.4_files/up.gif"></a></div>
+<div class="directive-section"><h2><a name="DeflateInflateRatioLimit" id="DeflateInflateRatioLimit">DeflateInflateRatioLimit</a> <a name="deflateinflateratiolimit" id="deflateinflateratiolimit">Directive</a></h2>
+<table class="directive">
+<tbody><tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Description">Description:</a></th><td>Maximum inflation ratio for request bodies</td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Syntax">Syntax:</a></th><td><code>DeflateInflateRatioLimit <var>value</var></code></td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Default">Default:</a></th><td><code>DeflateInflateRatioLimit 200</code></td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Context">Context:</a></th><td>server config, virtual host, directory, .htaccess</td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Status">Status:</a></th><td>Extension</td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Module">Module:</a></th><td>mod_deflate</td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Compatibility">Compatibility:</a></th><td>2.4.10 and later</td></tr>
+</tbody></table>
+    <p>The <code class="directive">DeflateInflateRatioLimit</code> directive
+        specifies the maximum ratio of deflated to inflated size of an
+        inflated request body. This ratio is checked as the body is
+        streamed in, and if crossed more than
+        <code class="directive"><a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html#deflateinflateratioburst">DeflateInflateRatioBurst</a></code>
+        times, the request will be terminated.</p>
+
+</div>
+<div class="top"><a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html#page-header"><img alt="top" src="./mod_deflate - Apache HTTP Server Version 2.4_files/up.gif"></a></div>
+<div class="directive-section"><h2><a name="DeflateMemLevel" id="DeflateMemLevel">DeflateMemLevel</a> <a name="deflatememlevel" id="deflatememlevel">Directive</a></h2>
+<table class="directive">
+<tbody><tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Description">Description:</a></th><td>How much memory should be used by zlib for compression</td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Syntax">Syntax:</a></th><td><code>DeflateMemLevel <var>value</var></code></td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Default">Default:</a></th><td><code>DeflateMemLevel 9</code></td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Context">Context:</a></th><td>server config, virtual host</td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Status">Status:</a></th><td>Extension</td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Module">Module:</a></th><td>mod_deflate</td></tr>
+</tbody></table>
+    <p>The <code class="directive">DeflateMemLevel</code> directive specifies
+    how much memory should be used by zlib for compression
+    (a value between 1 and 9).</p>
+
+</div>
+<div class="top"><a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html#page-header"><img alt="top" src="./mod_deflate - Apache HTTP Server Version 2.4_files/up.gif"></a></div>
+<div class="directive-section"><h2><a name="DeflateWindowSize" id="DeflateWindowSize">DeflateWindowSize</a> <a name="deflatewindowsize" id="deflatewindowsize">Directive</a></h2>
+<table class="directive">
+<tbody><tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Description">Description:</a></th><td>Zlib compression window size</td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Syntax">Syntax:</a></th><td><code>DeflateWindowSize <var>value</var></code></td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Default">Default:</a></th><td><code>DeflateWindowSize 15</code></td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Context">Context:</a></th><td>server config, virtual host</td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Status">Status:</a></th><td>Extension</td></tr>
+<tr><th><a href="http://httpd.apache.org/docs/2.4/mod/directive-dict.html#Module">Module:</a></th><td>mod_deflate</td></tr>
+</tbody></table>
+    <p>The <code class="directive">DeflateWindowSize</code> directive specifies the
+    zlib compression window size (a value between 1 and 15). Generally, the
+    higher the window size, the higher can the compression ratio be expected.</p>
+
+</div>
+</div>
+<div class="bottomlang">
+<p><span>Available Languages: </span><a href="http://httpd.apache.org/docs/2.4/en/mod/mod_deflate.html" title="English">&nbsp;en&nbsp;</a> |
+<a href="http://httpd.apache.org/docs/2.4/fr/mod/mod_deflate.html" hreflang="fr" rel="alternate" title="Français">&nbsp;fr&nbsp;</a> |
+<a href="http://httpd.apache.org/docs/2.4/ja/mod/mod_deflate.html" hreflang="ja" rel="alternate" title="Japanese">&nbsp;ja&nbsp;</a> |
+<a href="http://httpd.apache.org/docs/2.4/ko/mod/mod_deflate.html" hreflang="ko" rel="alternate" title="Korean">&nbsp;ko&nbsp;</a></p>
+</div><div class="top"><a href="http://httpd.apache.org/docs/2.4/mod/mod_deflate.html#page-header"><img src="./mod_deflate - Apache HTTP Server Version 2.4_files/up.gif" alt="top"></a></div><div class="section"><h2><a id="comments_section" name="comments_section">Comments</a></h2><div class="warning"><strong>Notice:</strong><br>This is not a Q&amp;A section. Comments placed here should be pointed towards suggestions on improving the documentation or server, and may be removed by our moderators if they are either implemented or considered invalid/off-topic. Questions on how to manage the Apache HTTP Server should be directed at either our IRC channel, #httpd, on Freenode, or sent to our <a href="https://httpd.apache.org/lists.html">mailing lists</a>.</div>
+<script type="text/javascript"><!--//--><![CDATA[//><!--
+var comments_shortname = 'httpd';
+var comments_identifier = 'http://httpd.apache.org/docs/2.4/mod/mod_deflate.html';
+(function(w, d) {
+    if (w.location.hostname.toLowerCase() == "httpd.apache.org") {
+        d.write('<div id="comments_thread"><\/div>');
+        var s = d.createElement('script');
+        s.type = 'text/javascript';
+        s.async = true;
+        s.src = 'https://comments.apache.org/show_comments.lua?site=' + comments_shortname + '&page=' + comments_identifier;
+        (d.getElementsByTagName('head')[0] || d.getElementsByTagName('body')[0]).appendChild(s);
+    }
+    else { 
+        d.write('<div id="comments_thread">Comments are disabled for this page at the moment.<\/div>');
+    }
+})(window, document);
+//--><!]]></script><div id="comments_thread"></div></div><div id="footer">
+<p class="apache">Copyright 2020 The Apache Software Foundation.<br>Licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>.</p>
+<p class="menu"><a href="http://httpd.apache.org/docs/2.4/mod/">Modules</a> | <a href="http://httpd.apache.org/docs/2.4/mod/directives.html">Directives</a> | <a href="http://wiki.apache.org/httpd/FAQ">FAQ</a> | <a href="http://httpd.apache.org/docs/2.4/glossary.html">Glossary</a> | <a href="http://httpd.apache.org/docs/2.4/sitemap.html">Sitemap</a></p></div><script type="text/javascript"><!--//--><![CDATA[//><!--
+if (typeof(prettyPrint) !== 'undefined') {
+    prettyPrint();
+}
+//--><!]]></script>
+</body></html>
